@@ -1,0 +1,18 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudText Typo="Typo.body1" Class="ml-3">Blazor Image Upload</MudText>
+    </MudAppBar>
+    <MudMainContent>
+        <MudContainer Class="mt-16">
+            <MudGrid Class="mt-16 px-4">
+                @Body
+            </MudGrid>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
