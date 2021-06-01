@@ -10,10 +10,10 @@
             <MudText Typo="Typo.h2">Image Upload</MudText>
         </MudItem>
 
-        @if (!string.IsNullOrWhiteSpace(_imageUrl))
+        @if (!string.IsNullOrWhiteSpace(_formModel.PreviewUrl))
         {
             <MudItem xs="12">
-                <img src="@_imageUrl" />
+                <img src="@_formModel.PreviewUrl" />
             </MudItem>
         }
         <MudItem xs="12">
@@ -60,8 +60,6 @@
     private EditContext _editContext;
     private FormStatus _formStatus = FormStatus.None;
 
-    private string _imageUrl = string.Empty;
-
     private const int MaxImageUploadSizeMB = 1;
     private const int MaxImageUploadSize = MaxImageUploadSizeMB * 1000000; //in bytes
 
@@ -75,8 +73,7 @@
     {
         _formModel.ImageFile = null;
         _formModel.ImageFileData = null;
-
-        _imageUrl = null;
+        _formModel.PreviewUrl = null;
 
         if (e?.File is null)
             return;
@@ -96,7 +93,7 @@
         _formModel.ImageFileData = new byte[_formModel.ImageFile.Size];
         await imageStream.ReadAsync(_formModel.ImageFileData);
 
-        _imageUrl = $"data:image/jpeg;base64,{Convert.ToBase64String(_formModel.ImageFileData)}";
+        _formModel.PreviewUrl = $"data:image/jpeg;base64,{Convert.ToBase64String(_formModel.ImageFileData)}";
     }
 
     private async Task OnSubmit()
@@ -119,6 +116,7 @@
     public class ImageUploadFormModel
     {
         public IBrowserFile ImageFile { get; set; }
+        public string PreviewUrl { get; set; }
 
         [Required]
         public byte[] ImageFileData { get; set; }
