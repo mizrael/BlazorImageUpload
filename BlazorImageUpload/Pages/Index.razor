@@ -1,7 +1,6 @@
 ﻿@page "/"
 @using System.ComponentModel.DataAnnotations
 @inject ISnackbar Snackbar
-@inject Services.IBlobFactory BlobFactory
 @inject MediatR.IMediator Mediator
 
 <EditForm OnSubmit="@OnSubmit" EditContext="@_editContext">
