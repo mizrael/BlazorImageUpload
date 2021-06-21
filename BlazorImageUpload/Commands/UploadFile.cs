@@ -20,7 +20,7 @@ namespace BlazorImageUpload.Commands
 
         public async Task Handle(UploadFile command, CancellationToken cancellationToken)
         {
-            var blobName = $"image_{command.FileId}.jpg";
+            var blobName = $"file_{command.FileId}.jpg";
             var blobContainer = await _blobFactory.CreateContainerAsync("uploaded-files", cancellationToken);
             await blobContainer.DeleteBlobIfExistsAsync(blobName, cancellationToken: cancellationToken);
 
