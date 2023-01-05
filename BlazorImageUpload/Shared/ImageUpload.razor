@@ -103,7 +103,7 @@
         await this.InvokeAsync(StateHasChanged);
 
         var command = new Commands.UploadImage(Guid.NewGuid(), _formModel.ImageFileData);
-        await this.Mediator.Publish(command);
+        await this.Mediator.Send(command);
 
         _formStatus = FormStatus.Successful;
     }

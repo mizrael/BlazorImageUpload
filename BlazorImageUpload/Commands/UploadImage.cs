@@ -6,9 +6,9 @@ using BlazorImageUpload.Services;
 
 namespace BlazorImageUpload.Commands
 {
-    public record UploadImage(Guid ImageId, byte[] ImageData) : INotification;
+    public record UploadImage(Guid ImageId, byte[] ImageData) : IRequest;
 
-    public class UploadImageHandler : INotificationHandler<UploadImage>
+    public class UploadImageHandler : IRequestHandler<UploadImage>
     {
         private readonly IBlobFactory _blobFactory;
 
@@ -17,7 +17,7 @@ namespace BlazorImageUpload.Commands
             _blobFactory = blobFactory ?? throw new ArgumentNullException(nameof(blobFactory));
         }
 
-        public async Task Handle(UploadImage command, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UploadImage command, CancellationToken cancellationToken)
         {
             var blobName = $"image_{command.ImageId}.jpg";
             var blobContainer = await _blobFactory.CreateContainerAsync("uploaded-images", cancellationToken);
@@ -28,6 +28,8 @@ namespace BlazorImageUpload.Commands
                 using var ms = new System.IO.MemoryStream(command.ImageData);
                 await blobContainer.UploadBlobAsync(blobName, ms, cancellationToken);
             }
+
+            return Unit.Value;
         }
     }
 }

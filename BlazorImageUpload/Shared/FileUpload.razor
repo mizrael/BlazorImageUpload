@@ -5,6 +5,7 @@
 <EditForm OnSubmit="@OnSubmit" EditContext="@_editContext">
     <MudGrid>
         <MudItem xs="12" md="4">
+            <MudText>Max file size (MB)</MudText>
             <MudNumericField Placeholder="Max file size (MB)" @bind-Value="_formModel.MaxFileSize"></MudNumericField>
         </MudItem>
 
@@ -100,7 +101,7 @@
         using var stream = _formModel.File.OpenReadStream(allowedSize);
 
         var command = new Commands.UploadFile(Guid.NewGuid(), stream);
-        await this.Mediator.Publish(command);
+        await this.Mediator.Send(command);
 
         _formStatus = FormStatus.Successful;
     }
